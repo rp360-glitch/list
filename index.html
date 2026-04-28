@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Protected Links Page</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: black;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .box {
+      width: 90%;
+      max-width: 700px;
+      background: #111;
+      border: 1px solid #333;
+      border-radius: 14px;
+      padding: 30px;
+      text-align: center;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+    }
+
+    input {
+      width: 80%;
+      max-width: 400px;
+      padding: 12px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      margin-bottom: 15px;
+    }
+
+    button {
+      padding: 12px 24px;
+      font-size: 16px;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      background: white;
+      color: black;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .link {
+      display: block;
+      margin: 12px 0;
+      padding: 14px;
+      background: #1a1a1a;
+      border: 1px solid #333;
+      border-radius: 10px;
+      text-decoration: none;
+      color: white;
+    }
+
+    .error {
+      color: #ff5555;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+<div class="box">
+  <div id="passwordPage">
+    <h1>Enter Password</h1>
+    <input
+      type="password"
+      id="passwordInput"
+      placeholder="Enter password"
+      onkeydown="if(event.key === 'Enter') checkPassword()"
+    >
+    <br>
+    <button onclick="checkPassword()">Confirm</button>
+    <div id="errorMessage" class="error"></div>
+  </div>
+
+  <div id="linksPage" class="hidden">
+    <h1>Your Links</h1>
+    <div id="linksContainer"></div>
+  </div>
+</div>
+
+<script>
+const PASSWORD = "hello";
+
+const LINKS = [
+  {
+    name: "Snow Rider 3D",
+    url: "https://rp360-glitch.github.io/Snow-Rider-3D/"
+  },
+  {
+    name: "GitHub",
+    url: "https://github.com"
+  },
+  {
+    name: "Example Site",
+    url: "https://example.com"
+  }
+];
+
+function checkPassword() {
+  const input = document.getElementById("passwordInput").value;
+  const error = document.getElementById("errorMessage");
+
+  if (input === PASSWORD) {
+    document.getElementById("passwordPage").classList.add("hidden");
+    document.getElementById("linksPage").classList.remove("hidden");
+    renderLinks();
+  } else {
+    error.textContent = "Incorrect password";
+  }
+}
+
+function renderLinks() {
+  const container = document.getElementById("linksContainer");
+  container.innerHTML = "";
+
+  LINKS.forEach(link => {
+    const a = document.createElement("a");
+    a.href = link.url;
+    a.target = "_blank";
+    a.className = "link";
+    a.textContent = link.name;
+    container.appendChild(a);
+  });
+}
+</script>
+</body>
+</html>
